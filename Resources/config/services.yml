@@ -1,0 +1,4 @@
+services:
+    fbeen_mailer:
+        class: Fbeen\MailerBundle\Service\Mailer
+        arguments: ['@service_container']
