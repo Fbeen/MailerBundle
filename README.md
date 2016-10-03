@@ -55,13 +55,13 @@ If the company_logo is a full URL then it will be used directly. Otherwise The m
 
 **general:** This is the ***Reply-to*** that will be set by default. if the receiver replies than you will receive his mail on this mailaddress
 
-**admins:** This is the ***To*** or the receiver(s) set by default.
+**admins:** This is the ***To*** of the receiver(s) set by default.
 
 ## How to use
 
 This can be easily shown with a few examples:
 
-1. to send an email to the admins you don't need to use setTo()
+To send an email to the admins you don't need to use setTo()
 ```
 /*
  * send an email to the admins
@@ -78,7 +78,7 @@ This can be easily shown with a few examples:
 ;    
 ```
 
-2. to send an email to a user you will have to use setTo()
+To send an email to a user you will have to use setTo()
 ```
 /*
  * send an email to the user
@@ -94,7 +94,7 @@ This can be easily shown with a few examples:
 ;    
 ```
 
-3. The mailer class will add addional data to the array before calling twig:
+The mailer class will add addional data to the array before calling twig:
 * companyName (the name of your company from the configuration)
 * companyLogo (the path or full URL to an image of your choice)
 * urlHomepage (the full URL to the "/" path of your website)
@@ -137,4 +137,33 @@ So for example 2 you could have a pair of templates as below.
         </tr>
     </table>
 {% endblock %}
+```
+To render a page with an example content of the email:
+```
+namespace AppBundle\Controller;
+
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
+
+class DefaultController extends Controller
+{
+    public function emailAction()
+    {
+        $user = new User();
+        
+        $user->setName('Frank Beentjes');
+        $user->setEmail('frank@example.org');
+        
+        return new Response(
+        	$this->get('fbeen_mailer')
+            	->setSubject('Welcome on board!')
+            	->setTemplate('email/welcome.html.twig')
+            	->setTemplate('email/'.$blockname.'.html.twig')
+            	->setData(array(
+                	'user' => $user
+            	))
+            	->renderView()
+        );
+    }
+}
 ```

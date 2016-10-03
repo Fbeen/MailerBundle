@@ -1,0 +1,23 @@
+{
+    "name" : "fbeen/mailerbundle",
+    "description" : "This bundle is a tiny layer on top of the Swift Mailer Bundle that is included in each standard Symfony framework",
+    "type" : "symfony-bundle",
+    "authors" : [{
+        "name" : "Frank Beentjes",
+        "email" : "frankbeen@gmail.com"
+    }],
+    "keywords" : [
+        "Swift Mailer"
+    ],
+    "license" : [
+        "MIT"
+    ],
+    "require" : {
+    },
+    "autoload" : {
+        "psr-0" : {
+            "Fbeen\\MailerBundle" : ""
+        }
+    },
+    "target-dir" : "Fbeen/MailerBundle"
+}
