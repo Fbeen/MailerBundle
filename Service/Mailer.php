@@ -92,7 +92,7 @@ class Mailer
     {
         $request = $this->container->get('request_stack')->getCurrentRequest();
         
-        $urlHomepage = $this->container->get('request')->getUriForPath('/');
+        $urlHomepage = $request->getUriForPath('/');
         
         $companyName = $this->container->getParameter('fbeen_mailer.company_name');
         $companyLogo = $this->container->getParameter('fbeen_mailer.company_logo');
