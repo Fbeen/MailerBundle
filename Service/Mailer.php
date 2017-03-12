@@ -35,6 +35,11 @@ class Mailer
         ;
     }
     
+    public function getMessage()
+    {
+        return $this->message;
+    }
+    
     public function setTo($addresses)
     {
         $this->message->setTo($addresses);
@@ -83,7 +88,14 @@ class Mailer
     public function sendMail($embedImages = TRUE)
     {
         $this->message->setBody($this->renderView($embedImages));
-        $this->container->get('mailer')->send($this->message);
+        
+        $mailer = $this->container->get('mailer');
+        $mailer->send($this->message); 
+        
+        $spool = $mailer->getTransport()->getSpool();
+        $transport = $this->container->get('swiftmailer.transport.real');
+
+        $spool->flushQueue($transport);
         
         return $this;
     }
