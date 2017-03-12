@@ -35,6 +35,7 @@ class Mailer
         ;
     }
     
+
     public function getMessage()
     {
         return $this->message;
