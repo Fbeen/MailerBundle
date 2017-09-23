@@ -28,10 +28,11 @@ class Mailer
         $this->message
             ->setContentType('text/html')
             ->setSubject('testmail')
-            ->setFrom($this->container->getParameter('fbeen_mailer.mailaddresses.noreply'))
-            ->setTo($this->container->getParameter('fbeen_mailer.mailaddresses.admins'))
-            ->setReplyTo($this->container->getParameter('fbeen_mailer.mailaddresses.general'))
-            ->setBody('<h1>Testmail</h1>')
+            ->setFrom($this->parameterToMailadres($this->container->getParameter('fbeen_mailer.mailaddresses.noreply')))
+            ->setTo($this->getAdmins())
+            ->setReplyTo($this->parameterToMailadres($this->container->getParameter('fbeen_mailer.mailaddresses.general')))
+            ->setBody('<h1>Testmail</h1>', 'text/html')
+            ->addPart('Your mailclient must suppprt HTML content. Please find yourself an other mailclient.', 'text/plain')
         ;
     }
     
@@ -127,5 +128,34 @@ class Mailer
             'urlHomepage' => $urlHomepage,
             'subject'     => $this->message->getSubject()
         ));
+    }
+    
+    public function getAdmins()
+    {
+        $admins = array();
+        
+        foreach($this->container->getParameter('fbeen_mailer.mailaddresses.admins') as $admin)
+        {
+            if(isset($admin['name'])) {
+                $admins[$admin['email']] = $admin['name'];
+            } else {
+                $admins[] = $admin['email'];
+            }
+        }
+
+        return $admins;      
+    }
+    
+    private function parameterToMailadres($associativeArray)
+    {
+        $result = array();
+        
+        if(isset($associativeArray['name'])) {
+            $result[$associativeArray['email']] = $associativeArray['name'];
+        } else {
+            $result = $associativeArray['email'];
+        }
+        
+        return $result;
     }
 }

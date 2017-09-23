@@ -44,9 +44,15 @@ fbeen_mailer:
     company_name: "php-programmer.nl"
     company_logo: "https://www.php-programmer.nl/images/logo.png"
     mailaddresses:
-        noreply: no-reply@example.com                   # required
-        general: info@example.com                       # required
-        admins: [admin1@gmail.com, admin2@hotmail.com]  # at least one 
+        noreply: 
+            email: no-reply@example.com                   # required
+            name: example.com                             # optional
+        general: 
+            email: info@example.com                       # required
+            name: example.com                             # optional
+        admins:
+            - {email: 'admin1@gmail.com', name: 'Admin1'} # at least one required, name is optional
+            - {email: 'admin2@gmail.com'}
 
 ```
 If the company_logo is a full URL then it will be used directly. Otherwise The mailer class will use treat it as an asset.
@@ -56,6 +62,8 @@ If the company_logo is a full URL then it will be used directly. Otherwise The m
 **general:** This is the ***Reply-to*** that will be set by default. if the receiver replies than you will receive his mail on this mailaddress
 
 **admins:** This is the ***To*** of the receiver(s) set by default.
+
+**using names gives less spamscore**
 
 ## How to use
 
